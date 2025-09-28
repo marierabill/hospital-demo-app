@@ -7,6 +7,7 @@
 <body class="container mt-4">
 
 <h2>Add Patient</h2>
+<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 <form method="post">
     <div class="mb-3">
         <label>Name</label>
