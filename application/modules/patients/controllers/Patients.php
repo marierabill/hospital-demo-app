@@ -16,27 +16,36 @@ function index()
 }
 
 // Add new patient
-function add() 
-{
-	if ($this->input->post('submit')) {
-		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('dob', 'Date of Birth', 'required');
-		$this->form_validation->set_rules('gender', 'Gender', 'required');
-		$this->form_validation->set_rules('phone', 'Phone', 'required');
+function add() {
+    if ($this->input->post('submit')) {
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('dob', 'Date of Birth', 'required');
+        $this->form_validation->set_rules('gender', 'Gender', 'required');
+        $this->form_validation->set_rules('phone', 'Phone', 'required');
 
-		if ($this->form_validation->run() !== FALSE) {
-			$data = [
-				'name'   => $this->input->post('name'),
-				'dob'    => $this->input->post('dob'),
-				'gender' => $this->input->post('gender'),
-				'phone'  => $this->input->post('phone')
-			];
-			$this->Mdl_patients->_insert($data);
-			redirect('patients');
-		}
-	}
-	$this->load->view('add');
+        if ($this->form_validation->run() !== FALSE) {
+            $data = [
+                'name'   => $this->input->post('name', TRUE),
+                'dob'    => $this->input->post('dob', TRUE),
+                'gender' => $this->input->post('gender', TRUE),
+                'phone'  => $this->input->post('phone', TRUE)
+            ];
+
+            // Debug log
+            log_message('debug', 'Insert data: ' . print_r($data, TRUE));
+
+            if ($this->Mdl_patients->_insert($data)) {
+                redirect('patients');
+            } else {
+                echo "Insert failed!";
+            }
+        } else {
+            echo validation_errors();
+        }
+    }
+    $this->load->view('add');
 }
+
 
 // Edit existing patient
 function edit($id) 
