@@ -28,7 +28,7 @@
         <label>Phone</label>
         <input type="text" name="phone" value="<?php echo $patient->phone; ?>" class="form-control" required>
     </div>
-    <button type="submit" name="submit" class="btn btn-success">Update</button>
+	<button type="submit" class="btn btn-primary" name="submit" value="Submit">Update</button>
     <a href="<?php echo site_url('patients'); ?>" class="btn btn-secondary">Cancel</a>
 </form>
 

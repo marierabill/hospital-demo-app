@@ -8,7 +8,8 @@
 
 <h2>Add Patient</h2>
 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-<form method="post">
+<?php $form_location = base_url()."patients/add/"; ?>
+<form method="post" action="<?= $form_location ?>">
     <div class="mb-3">
         <label>Name</label>
         <input type="text" name="name" class="form-control" required>
@@ -30,8 +31,9 @@
         <label>Phone</label>
         <input type="text" name="phone" class="form-control" required>
     </div>
-    <button type="submit" name="submit" class="btn btn-success">Save</button>
-    <a href="<?php echo site_url('patients'); ?>" class="btn btn-secondary">Cancel</a>
+    
+	<button type="submit" class="btn btn-primary" name="submit" value="Submit">Save</button>
+    <a href="<?= base_url('patients'); ?>" class="btn btn-secondary">Cancel</a>
 </form>
 
 </body>

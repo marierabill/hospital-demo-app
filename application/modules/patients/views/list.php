@@ -7,7 +7,7 @@
 <body class="container mt-4">
 
 <h2>Patients</h2>
-<a href="<?php echo site_url('patients/add'); ?>" class="btn btn-primary mb-3">Add Patient</a>
+<a href="<?= base_url('patients/add'); ?>" class="btn btn-primary mb-3">Add Patient</a>
 
 <table class="table table-bordered">
     <thead>

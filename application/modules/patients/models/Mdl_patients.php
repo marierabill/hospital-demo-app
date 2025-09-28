@@ -5,7 +5,7 @@ class Mdl_patients extends CI_Model
 function __construct()
 {
 	parent::__construct();
-	$this->load->database(); // ✅ ensures $this->db is available
+	//$this->load->database(); // ✅ ensures $this->db is available
 }
 
 function get_table()
