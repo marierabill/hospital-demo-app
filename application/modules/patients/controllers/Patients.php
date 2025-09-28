@@ -1,25 +1,77 @@
 <?php
 class Patients extends MX_Controller 
 {
-
-function __construct() {
-parent::__construct();
-}
-
-
-public function add() {
-    if ($this->input->post()) {
-        $data = [
-            'name' => $this->input->post('name'),
-            'dob'  => $this->input->post('dob'),
-            'gender' => $this->input->post('gender'),
-            'phone' => $this->input->post('phone')
-        ];
-        $this->Patient_model->insert($data);
-        redirect('patients');
+    function __construct() {
+        parent::__construct();
+        $this->load->model('Mdl_patients');
+        $this->load->library('form_validation');
+        $this->load->helper(array('form', 'url'));
     }
-    $this->load->view('patients/add');
+
+// List all patients
+function index() 
+{
+	$data['patients'] = $this->Mdl_patients->get('id');
+	$this->load->view('list', $data);
 }
+
+// Add new patient
+function add() 
+{
+	if ($this->input->post('submit')) {
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('dob', 'Date of Birth', 'required');
+		$this->form_validation->set_rules('gender', 'Gender', 'required');
+		$this->form_validation->set_rules('phone', 'Phone', 'required');
+
+		if ($this->form_validation->run() !== FALSE) {
+			$data = [
+				'name'   => $this->input->post('name'),
+				'dob'    => $this->input->post('dob'),
+				'gender' => $this->input->post('gender'),
+				'phone'  => $this->input->post('phone')
+			];
+			$this->Mdl_patients->_insert($data);
+			redirect('patients');
+		}
+	}
+	$this->load->view('add');
+}
+
+// Edit existing patient
+function edit($id) 
+{
+	$data['patient'] = $this->Mdl_patients->get_where($id)->row();
+
+	if ($this->input->post('submit')) {
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('dob', 'Date of Birth', 'required');
+		$this->form_validation->set_rules('gender', 'Gender', 'required');
+		$this->form_validation->set_rules('phone', 'Phone', 'required');
+
+		if ($this->form_validation->run() !== FALSE) {
+			$update_data = [
+				'name'   => $this->input->post('name'),
+				'dob'    => $this->input->post('dob'),
+				'gender' => $this->input->post('gender'),
+				'phone'  => $this->input->post('phone')
+			];
+			$this->Mdl_patients->_update($id, $update_data);
+			redirect('patients');
+		}
+	}
+
+	$this->load->view('edit', $data);
+}
+
+// Delete patient
+function delete($id) 
+{
+	$this->Mdl_patients->_delete($id);
+	redirect('patients');
+}
+
+
 
 
 

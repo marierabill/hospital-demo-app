@@ -13,12 +13,12 @@ function get_table()
     return $table;
 }
 
-function get($order_by)
+function get($order_by) 
 {
-    $table = $this->get_table();
-    $this->db->order_by($order_by);
-    $query=$this->db->get($table);
-    return $query;
+	$table = $this->get_table();
+	$this->db->order_by($order_by, 'ASC');
+	$query = $this->db->get($table);
+	return $query;
 }
 
 function get_with_limit($limit, $offset, $order_by)
